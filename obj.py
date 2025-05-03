@@ -58,6 +58,8 @@ class Bird(Obj):
         self.ticks = 0
         self.gravity = 0.5
         
+        self.alive = True
+        
     def update(self, *args):
         self.anim()
         self.move()
@@ -79,7 +81,22 @@ class Bird(Obj):
             self.speed -= 2
         
         if self.rect[1] >= 430:
-            self.rect[1] = 430
+            self.rect[1] = 429
+            self.speed = 0
         elif self.rect[1] <= 0:
             self.rect[1] = 0
             self.speed = 4
+    
+    def colision_pipe(self, group):
+        
+        col = pygame.sprite.spritecollide(self, group, False)
+        
+        if col:
+            self.alive = False
+    
+    def colision_coin(self, group):
+        
+        col = pygame.sprite.spritecollide(self, group, True)
+        
+        if col:
+            print("Moeda")

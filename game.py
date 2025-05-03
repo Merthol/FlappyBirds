@@ -7,6 +7,8 @@ class Game:
     def __init__(self):
         
         self.all_sprites = pygame.sprite.Group()
+        self.coins_group = pygame.sprite.Group()
+        self.pipes_group = pygame.sprite.Group()
         
         self.speed = 3
         
@@ -23,10 +25,13 @@ class Game:
         self.all_sprites.draw(window)
     
     def update(self):
-        self.all_sprites.update()
         self.move_bg()
         self.move_ground()
-        self.spawn_pipes()
+        if self.bird.alive:
+            self.spawn_pipes()
+            self.bird.colision_coin(self.coins_group)
+            self.bird.colision_pipe(self.pipes_group)
+            self.all_sprites.update()
         
     def move_bg(self):
         self.bg.rect[0] -= 1
@@ -51,7 +56,7 @@ class Game:
         if self.ticks >= random.randrange(90, 150):
             self.ticks = 0
             pos = random.randrange(285, 420)
-            pipe = Pipe("assets/pipe1.png", 360, random.randrange(285, 420), self.all_sprites, speed = self.speed)
-            pipe2 = Pipe("assets/pipe2.png", 360, pipe.rect[1] - 490, self.all_sprites, speed = self.speed)
+            pipe = Pipe("assets/pipe1.png", 360, random.randrange(285, 420), self.all_sprites, self.pipes_group, speed = self.speed)
+            pipe2 = Pipe("assets/pipe2.png", 360, pipe.rect[1] - 490, self.all_sprites, self.pipes_group, speed = self.speed)
             
-            coin = Coin("assets/coin0.png", pipe.rect[0] + 26, pipe.rect[1] - 87, self.all_sprites, speed = self.speed)
+            coin = Coin("assets/coin0.png", pipe.rect[0] + 26, pipe.rect[1] - 87, self.all_sprites, self.coins_group, speed = self.speed)
