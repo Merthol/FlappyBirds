@@ -1,6 +1,7 @@
 import pygame
 
 class Main:
+    
     def __init__(self):
         
         self.window = pygame.display.set_mode((360, 640))
@@ -20,11 +21,11 @@ class Main:
     def draw(self):
         pass
     
-    def update(self):
+    def updates(self):
         while self.loop:
             self.fps.tick(30)
             self.events()
             self.draw()
             pygame.display.update()
         
-Main().update()
+Main().updates()
