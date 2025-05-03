@@ -6,6 +6,8 @@ class Main:
     
     def __init__(self):
         
+        pygame.init()
+        
         self.window = pygame.display.set_mode((360, 640))
         self.title = pygame.display.set_caption("Flappy Bird")
         

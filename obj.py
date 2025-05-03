@@ -58,6 +58,8 @@ class Bird(Obj):
         self.ticks = 0
         self.gravity = 0.5
         
+        self.score = 0
+        
         self.alive = True
         
     def update(self, *args):
@@ -99,4 +101,18 @@ class Bird(Obj):
         col = pygame.sprite.spritecollide(self, group, True)
         
         if col:
-            print("Moeda")
+            self.score += 1
+
+
+class Text:
+    
+    def __init__(self, size, text):
+        
+        self.font = pygame.font.Font("assets/font/font.ttf", size)
+        self.render = self.font.render(text, True, (255, 255, 255))
+        
+    def draw(self, window, x, y):
+        window.blit(self.render, (x, y))
+    
+    def text_update(self, text):
+        self.render = self.font.render(text, True, (255, 255, 255))

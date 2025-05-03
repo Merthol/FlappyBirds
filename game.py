@@ -17,12 +17,15 @@ class Game:
         self.ground = Obj("assets/ground.png", 0, 476, self.all_sprites)
         self.ground2 = Obj("assets/ground.png", 360, 476, self.all_sprites)
         
+        self.score_text = Text(100, "0")
+        
         self.bird = Bird("assets/bird0.png", 50, 320, self.all_sprites)
         
         self.ticks = 0
     
     def draw(self, window):
         self.all_sprites.draw(window)
+        self.score_text.draw(window, 150, 50)
     
     def update(self):
         self.move_bg()
@@ -31,6 +34,7 @@ class Game:
             self.spawn_pipes()
             self.bird.colision_coin(self.coins_group)
             self.bird.colision_pipe(self.pipes_group)
+            self.score_text.text_update(str(self.bird.score))
             self.all_sprites.update()
         
     def move_bg(self):
