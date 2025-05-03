@@ -23,10 +23,10 @@ class Main:
             if event.type == pygame.QUIT:
                 self.loop = False
                 pygame.quit()
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.loop = False
-            elif not self.menu.change_scene:
+            if not self.menu.change_scene:
                 self.menu.events(event)
     
     def draw(self):

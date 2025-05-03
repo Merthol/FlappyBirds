@@ -37,7 +37,8 @@ class Menu:
         if event.type == pygame.MOUSEBUTTONUP:
             if self.button_go.rect.collidepoint(pygame.mouse.get_pos()):
                 self.change_scene = True
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
+            print(event.key)
             if event.key == pygame.K_SPACE:
                 self.change_scene = True
         
