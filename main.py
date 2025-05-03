@@ -1,4 +1,6 @@
 import pygame
+from game import Game
+
 
 class Main:
     
@@ -10,6 +12,8 @@ class Main:
         self.loop = True
         self.fps = pygame.time.Clock()
         
+        self.game = Game()
+        
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -19,7 +23,8 @@ class Main:
                     self.loop = False
     
     def draw(self):
-        pass
+        self.game.draw(self.window)
+        self.game.update()
     
     def updates(self):
         while self.loop:
