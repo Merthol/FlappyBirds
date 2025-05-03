@@ -1,5 +1,6 @@
 import pygame
 from game import Game
+from menu import Menu
 
 
 class Main:
@@ -15,24 +16,36 @@ class Main:
         self.fps = pygame.time.Clock()
         
         self.game = Game()
+        self.menu = Menu()
         
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.loop = False
-            if event.type == pygame.KEYDOWN:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.loop = False
+            elif not self.menu.change_scene:
+                self.menu.events(event)
     
     def draw(self):
-        self.game.draw(self.window)
-        self.game.update()
+        if not self.menu.change_scene:
+            self.menu.draw(self.window)
+            self.menu.update(str(self.game.max_score))
+        elif not self.game.change_scene:
+            self.game.draw(self.window)
+            self.game.update()
+        else:
+            self.loop = False
     
     def updates(self):
         while self.loop:
             self.fps.tick(30)
-            self.events()
             self.draw()
+            self.events()
             pygame.display.update()
-        
-Main().updates()
+       
+loop = True
+while loop: 
+    Main().updates()

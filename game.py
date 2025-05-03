@@ -21,7 +21,13 @@ class Game:
         
         self.bird = Bird("assets/bird0.png", 50, 320, self.all_sprites)
         
+        self.change_scene = False
+        
         self.ticks = 0
+        self.timer = 0
+        
+        self.max_score = 0
+        self.check_score()
     
     def draw(self, window):
         self.all_sprites.draw(window)
@@ -36,6 +42,10 @@ class Game:
             self.bird.colision_pipe(self.pipes_group)
             self.score_text.text_update(str(self.bird.score))
             self.all_sprites.update()
+        else:
+            self.save_score()
+            self.gameover()
+
         
     def move_bg(self):
         self.bg.rect[0] -= 1
@@ -59,8 +69,25 @@ class Game:
         self.ticks += 1
         if self.ticks >= random.randrange(90, 150):
             self.ticks = 0
-            pos = random.randrange(285, 420)
             pipe = Pipe("assets/pipe1.png", 360, random.randrange(285, 420), self.all_sprites, self.pipes_group, speed = self.speed)
             pipe2 = Pipe("assets/pipe2.png", 360, pipe.rect[1] - 490, self.all_sprites, self.pipes_group, speed = self.speed)
             
             coin = Coin("assets/coin0.png", pipe.rect[0] + 26, pipe.rect[1] - 87, self.all_sprites, self.coins_group, speed = self.speed)
+    
+    def gameover(self):
+         self.timer += 1
+         if self.timer >= 30:
+             self.change_scene = True
+
+    def save_score(self):
+        if self.bird.score > self.max_score:
+            self.max_score = self.bird.score
+            with open("save.txt", "w") as f:
+                f.write(str(self.max_score))
+    
+    def check_score(self):
+        try:
+            with open("save.txt", "r") as f:
+                self.max_score = int(f.read())
+        except FileNotFoundError:
+            self.max_score = 0
