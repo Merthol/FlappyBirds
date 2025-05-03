@@ -1,4 +1,4 @@
-from obj import Obj, Pipe
+from obj import Obj, Pipe, Coin
 import pygame
 import random
 
@@ -51,3 +51,5 @@ class Game:
             pos = random.randrange(285, 420)
             pipe = Pipe("assets/pipe1.png", 360, random.randrange(285, 420), self.all_sprites, speed = self.speed)
             pipe2 = Pipe("assets/pipe2.png", 360, pipe.rect[1] - 490, self.all_sprites, speed = self.speed)
+            
+            coin = Coin("assets/coin0.png", pipe.rect[0] + 26, pipe.rect[1] - 87, self.all_sprites, speed = self.speed)
